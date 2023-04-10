@@ -7,7 +7,6 @@ function duplicateArray(arr) {
 }
 function createSubState(state, emptyIndex, direction) {
     const newState = duplicateArray(state)
-    console.log(direction)
     switch (direction) {
         case 'left':
             newState[emptyIndex.y][emptyIndex.x] = newState[emptyIndex.y][emptyIndex.x - 1]
@@ -42,8 +41,9 @@ function getIndex(state, target) {
     return ({ y: rowIndex, x: colIndex })
 }
 export class Node {
-    constructor(state, parent) {
+    constructor(state, parent, gscore) {
         this.state = state
+        this.gscore = gscore
         this.parent = parent
         this.mapSize = state.length
         this.subStates = []
@@ -53,12 +53,14 @@ export class Node {
         const emptyIndex = getIndex(this.state, '0')
         if (emptyIndex.x > 0)
             this.subStates.push(createSubState(this.state, emptyIndex, "left"))
-        if (emptyIndex.x < this.mapSize)
+        if (emptyIndex.x < this.mapSize - 1)
             this.subStates.push(createSubState(this.state, emptyIndex, "right"))
-        if (emptyIndex.y < this.mapSize)
+        if (emptyIndex.y < this.mapSize - 1){
             this.subStates.push(createSubState(this.state, emptyIndex, "down"))
+        }
         if (emptyIndex.y > 0)
             this.subStates.push(createSubState(this.state, emptyIndex, "up"))
+        return (this.subStates)
     }
     score(state, goal) {
         var i = 0;
@@ -78,7 +80,7 @@ export class Node {
 
     }
     isGoal(goal) {
-        const stateHash = state.toString()
+        const stateHash = this.state.toString()
         const goalHash = goal.toString()
         return (stateHash === goalHash)
     }
