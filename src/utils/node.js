@@ -1,10 +1,10 @@
 
 
 function duplicateArray(arr) {
-    return arr.map(function(row) {
-      return row.slice();
+    return arr.map(function (row) {
+        return row.slice();
     });
-  }
+}
 function createSubState(state, emptyIndex, direction) {
     const newState = duplicateArray(state)
     console.log(direction)
@@ -47,6 +47,7 @@ export class Node {
         this.parent = parent
         this.mapSize = state.length
         this.subStates = []
+        this.hash = this.state.map(e => e.join('.')).join('.')
     }
     getSubStates() {
         const emptyIndex = getIndex(this.state, '0')
@@ -59,22 +60,30 @@ export class Node {
         if (emptyIndex.y > 0)
             this.subStates.push(createSubState(this.state, emptyIndex, "up"))
     }
-    score(state, goal){
+    score(state, goal) {
         var i = 0;
         var j = 0;
         var score = 0;
-        var d1,d2 = 0
+        var d1, d2 = 0
         var goalTarget = {}
-        for (i = 0; i < state.length; i++){
-            for (j = 0; j < state.length; j++){
+        for (i = 0; i < state.length; i++) {
+            for (j = 0; j < state.length; j++) {
                 goalTarget = getIndex(goal, state[i][j])
                 d1 = Math.abs(i - goalTarget.y)
                 d2 = Math.abs(j - goalTarget.x)
-                score +=  d1 + d2
+                score += d1 + d2
             }
         }
         return score
 
+    }
+    isGoal(goal) {
+        const stateHash = state.toString()
+        const goalHash = goal.toString()
+        return (stateHash === goalHash)
+    }
+    hash(state) {
+        return (state.map(e => e.join('.')).join('.'))
     }
 
 }
