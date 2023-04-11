@@ -77,7 +77,6 @@ export class Node {
             }
         }
         return score
-
     }
     isGoal(goal) {
         const stateHash = this.state.toString()
