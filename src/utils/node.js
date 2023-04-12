@@ -27,18 +27,12 @@ function createSubState(state, emptyIndex, direction) {
     }
 }
 function getIndex(state, target) {
-    let rowIndex = -1;
-    let colIndex = -1;
-
-    for (let i = 0; i < state.length; i++) {
-        const row = state[i];
-        if (row.indexOf(target) !== -1) {
-            rowIndex = i;
-            colIndex = row.indexOf(target);
-            break
+    const size = state.length;
+    for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
+            if (state[i][j] == target) return { y: i, x: j };
         }
     }
-    return ({ y: rowIndex, x: colIndex })
 }
 export class Node {
     constructor(state, parent, gscore) {
@@ -55,7 +49,7 @@ export class Node {
             this.subStates.push(createSubState(this.state, emptyIndex, "left"))
         if (emptyIndex.x < this.mapSize - 1)
             this.subStates.push(createSubState(this.state, emptyIndex, "right"))
-        if (emptyIndex.y < this.mapSize - 1){
+        if (emptyIndex.y < this.mapSize - 1) {
             this.subStates.push(createSubState(this.state, emptyIndex, "down"))
         }
         if (emptyIndex.y > 0)
@@ -63,21 +57,46 @@ export class Node {
         return (this.subStates)
     }
     score(state, goal) {
-        var i = 0;
-        var j = 0;
+        // var i = 0;
+        // var j = 0;
         var score = 0;
-        var d1, d2 = 0
-        var goalTarget = {}
-        for (i = 0; i < state.length; i++) {
-            for (j = 0; j < state.length; j++) {
-                goalTarget = getIndex(goal, state[i][j])
-                d1 = Math.abs(i - goalTarget.y)
-                d2 = Math.abs(j - goalTarget.x)
-                score += d1 + d2
+        // var d1, d2 = 0
+        // var goalTarget = {}
+        // for (i = 0; i < state.length; i++) {
+        //     for (j = 0; j < state.length; j++) {
+        //         goalTarget = getIndex(goal, state[i][j])
+        //         d1 = Math.abs(i - goalTarget.x)
+        //         d2 = Math.abs(j - goalTarget.y)
+        //         score += d1 + d2
+        //     }
+        // }
+        const size = state.length;
+        for (let i = 0; i < size; i++) {
+            for (let j = 0; j < size; j++) {
+                // current tile in the loop
+                const currentTile = state[i][j];
+                // find the index of same tile value but in the goal puzzle
+                const tileInGoal = getIndex(goal, currentTile);
+                // find the tile that match the current i,j value in goal puzzle
+                const mirrorInGoal = goal[i][j];
+
+                // dont apply the equation on the empty TILE
+                if (currentTile != "0")
+                    try {
+                        // the distance between the X value of current tile and its equivalent in the goal puzzle
+                        let d1 = Math.abs(i - tileInGoal.y);
+                        // the distance between the Y value of current tile and its equivalent in the goal puzzle
+                        let d2 = Math.abs(j - tileInGoal.x);
+
+
+                        // calc manhattan score
+                        score += d1 + d2;
+                    } catch (err) { }
             }
         }
         return score
     }
+
     isGoal(goal) {
         const stateHash = this.state.toString()
         const goalHash = goal.toString()

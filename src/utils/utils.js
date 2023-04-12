@@ -21,7 +21,7 @@ export function printPuzzle(state, score, gscore) {
         else
         line += " " + state[i][j] 
         line += " ".repeat((size * size).toString().length - state[i][j].length) + ' ';
-        if (score != undefined && i == state.length - 1 && j == state.length - 1) line += "\x1b[33m  score: " + score + "   ren: " + gscore +"\x1b[0m";
+        if (score != undefined && i == state.length - 1 && j == state.length - 1) line += "\x1b[33m  score: " + score + "\x1b[0m";
       }
       log(line);
       line = '';
