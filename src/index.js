@@ -9,9 +9,23 @@ function arrayEquals(arr1, arr2) {
 	}
 	return true;
 }
+function verifyExistance(node, lookFor){
+	for (var i = 0; i < node.length; i++){
+		if (node[i].state.toString() === lookFor.toString()){
+			return (true)
+		}
+	}
+	return false
+}
+function doit(curr, goal){
 
+	for (var i = 0; i < curr.length; i++){
+		printPuzzle(curr[i].state, curr[i].score(curr[i].state, goal), curr[i].gscore)
+	}
+	exit()
+}
 async function main() {
-	const initState = [['4', '1', '2'], ['3', '0', '5'], ['6', '7', '8']]
+	const initState = [['0', '4', '2'], ['3', '1', '5'], ['6', '7', '8']]
 	const goal = [['0', '1', '2'], ['3', '4', '5'], ['6', '7', '8']]
 	const node = new Node(initState, null, 0)
 	const visited = new Set();
@@ -21,9 +35,9 @@ async function main() {
 	var i = 0;
 	while (openList.length > 0) {
 
-		openList.sort((a, b) => a.score - b.score);
+		// openList.sort((a, b) => a.score - b.score);
 		currentState = openList.shift();
-		console.log("curr state:", currentState.state)
+		// console.log("curr state:", currentState.state)
 		printPuzzle(currentState.state, currentState.score(currentState.state, goal), currentState.gscore)
 
 		if (currentState.isGoal(goal)) {
@@ -37,21 +51,20 @@ async function main() {
 			if (visited.has(subState.toString())) {
 				continue;
 			}
-			if (!openList.some(node => arrayEquals(node.state, subState))) {
+			if (!verifyExistance(openList, subState)) {
 				openList.push(new Node(subState, currentState, currentState.gscore + 1));
-
-				if(i == 40){
-					log(openList)
-					log(subState.map(e => e.join('.')).join('.'), "doesnt exist")
-					exit()
-				}
 			}
-		}
 
+		}
+		 if (i == 3){
+			log(new Array(...visited).join(' '))
+			 exit()
+			}
 		visited.add(currentState.toString());
 		// await pause(2)
 		i++;
 	}
+	log("out completly")
 	var path = currentState
 	while (path) {
 		printPuzzle(path.state, path.score(path.state, goal))
