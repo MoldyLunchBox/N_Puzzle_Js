@@ -16,7 +16,7 @@ export function printPuzzle(state, score, gscore) {
     let size = state.length;
     for (let i = 0; i < state.length; i++) {
       for (let j = 0; j < state.length; j++) {
-        if (state[i][j] == '0') 
+        if (state[i][j] == 0) 
             line  += ' █';
         else
         line += " " + state[i][j] 
