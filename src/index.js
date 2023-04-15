@@ -1,45 +1,10 @@
 import { BloomFilter } from "bloomfilter";
 import pause, { getNeighbors, printPuzzle } from "./utils/utils";
 import { Node } from "./utils/node"
-const { log } = console
-function arrayEquals(arr1, arr2) {
-	if (arr1.length !== arr2.length) return false;
-	for (let i = 0; i < arr1.length; i++) {
-		if (arr1[i] !== arr2[i]) return false;
-	}
-	return true;
-}
-function verifyExistance(node, lookFor) {
-	for (var i = 0; i < node.length; i++) {
-		if (node[i].state.toString() === lookFor.toString()) {
-			return (true)
-		}
-	}
-	return false
-}
+import { Solver } from "./utils/solver"
+import { traceBack } from "./utils/traceBack"
 
-function isSolvable(puzzleState, goal) {
-	// Flatten the puzzle state into a 1-dimensional array
-	const flattened = puzzleState.flat();
-	// Count the number of inversions
-	let inversions = 0;
-	for (let i = 0; i < flattened.length - 1; i++) {
-		for (let j = i + 1; j < flattened.length; j++) {
-			if (flattened[i] > flattened[j] && flattened[i] !== 0 && flattened[j] !== 0) {
-				console.log(flattened[i], flattened[j])
-				inversions++;
-			}
-		}
-	}
-	console.log(inversions)
-	exit()
-	const blankRowFromBottom = Math.floor(flattened.indexOf(0) / puzzleState[0].length);
-	if (puzzleState.length % 2 === 0) {
-		return inversions % 2 === blankRowFromBottom % 2;
-	} else {
-		return inversions % 2 === 0;
-	}
-}
+const { log } = console
 
 
 const EMPTY_TILE = 0;
@@ -83,16 +48,48 @@ function goalGenerator(size) {
 	}
 	return arr2D
 }
-async function main() {
-	const initState = [[1, 4, 2],
-					   [6, 3, 5], 
-					   [0, 7, 8]]
+function create2DArray(size) {
+	const arr = new Array(size);
+	for (let i = 0; i < size; i++) {
+	  arr[i] = new Array(size).fill(0);
+	}
+	return arr;
+  }
+function snail(size){
+	var goal = create2DArray(size)
+	goal[parseInt(size/2)][parseInt(size/2)] = 0
+	var colInc = 1
+	var rowInc = 1
+	var col = 0
+	var row = 0
+	var step = 0
+	while (steps < size * size){
+		while(col < size && !goal[row][col]){
+			goal[row][col] = step
+			col += colInc
+			step++
+		}
+		
+		colInc *= -1
 
-	// const initState = [ [ 1,  5,  2,  3],
-	// 					[ 4,  6,  0,  7], 
-	// 					[ 8,  9, 10, 11],
-	// 					[ 12, 13, 14, 15]]
+	}
+	log(mold)
+}
+async function main() {
+	const initState = [[4, 6, 2],
+					   [1, 5, 8], 
+					   [7, 3, 0]]
+
+					   
+					   // const initState = [ [ 1,  5,  2,  3],
+					   // 					[ 4,  6,  0,  7], 
+					   // 					[ 8,  9, 10, 11],
+					   // 					[ 12, 13, 14, 15]]
+
+	snail(4)
+					   exit()
 	const goal = goalGenerator(initState.length)
+
 	// heuristics list: manhattan, misplaced.
 	const node = new Node(initState, null, 0, goal, "manhattan")
 
@@ -101,47 +98,11 @@ async function main() {
 		console.log("not solvable")
 		exit()
 	}
-	const visited = new Set();
-	const openList = [node];
-	console.log(goal.toString())
-	var currentState = null
-	var i = 0;
-	while (openList.length > 0) {
-		openList.sort((a, b) => a.score - a.score)   // sort the open states acording to score after each loop iteration this results in always following the closest possible path
-		currentState = openList.shift();			// save the first state with the lowest score and pop it from the open states list
-		log("\n\n")
-		printPuzzle(currentState.state, currentState.score, currentState.gscore)
-		log("subStates")
-		if (currentState.isGoal(goal)) {			// check if the current state equals the goal state
-			log("found it");
-			break
-		}
-		const subStates = currentState.getSubStates();		//generate substates
-		console.log(subStates)
-		for (const subState of subStates) {					//add each substate to open states list if it doesnt exist in the visited list and doesnt already exist in the open states
-
-			if (visited.has(subState.toString())) {
-				continue;
-			}
-			if (!verifyExistance(openList, subState)) {
-				openList.push(new Node(subState, currentState, currentState.gscore + 1, goal));
-			}
-
-		}
-		visited.add(currentState.state.toString());   // since the current state is not the goal we add it to the visited list
-		i++;
-		log("\n\n")
-	}
+	const solver = new Solver(node)
+	solver.start()
 	log("out completly")
-	var path = currentState
-	i = 0
-	while (path) {
-		printPuzzle(path.state, path.score)
-		path = path.parent
-		i++
-		await pause(2)
-	}
-	log("steps:", i)
+	traceBack(solver.currentState)
+	
 	// node.getSubStates()
 	// const bloomFilter = new BloomFilter(32 * 1024 * 40000, 32);
 }

@@ -39,6 +39,21 @@ export function misplaced(state, goal){
     return differences
 }
 
+export function euclidean(state, goal){
+	var d = 0
+	for (var i = 0; i < state.length; i++){
+		for (var j = 0; j < state.length; j++){
+			var Tile = state[i][j]
+			var goalTile = getIndex(goal,Tile)
+			var d1 = (goalTile.y - i)**2
+			var d2 = (goalTile.x - j)**2
+			d += Math.sqrt(d1 + d2)
+
+		}
+	}
+	return d
+}
+
 export default {
 	misplaced: misplaced,
 	manhattan: manhattan,

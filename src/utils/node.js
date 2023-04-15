@@ -1,4 +1,4 @@
-import { manhattan, misplaced } from "./heuristics";
+import { euclidean, manhattan, misplaced } from "./heuristics";
 
 
 function duplicateArray(arr) {
@@ -60,7 +60,7 @@ export class Node {
         return (this.subStates)
     }
     score(state, goal, heuristic) {
-        return misplaced(state, goal)
+        return euclidean(state, goal)
     }
 
     isGoal(goal) {
