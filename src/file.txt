@@ -1,0 +1,7 @@
+heyhey
+hello
+
+
+	// var file = await loadInput("./src/file.txt")
+	// 					log(file.split("\n"))
+	// 					exit()

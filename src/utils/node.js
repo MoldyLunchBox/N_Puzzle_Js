@@ -1,4 +1,4 @@
-import { euclidean, manhattan, misplaced } from "./heuristics";
+import heuristics, { euclidean, manhattan, misplaced } from "./heuristics";
 
 
 function duplicateArray(arr) {
@@ -59,8 +59,20 @@ export class Node {
             this.subStates.push(createSubState(this.state, emptyIndex, "up"))
         return (this.subStates)
     }
-    score(state, goal, heuristic) {
-        return euclidean(state, goal)
+    score(state, goal, heuristics) {
+        var score = 0
+        for (var heuristic of heuristics){
+
+            if (heuristic == "euclidean")
+            score += euclidean(state, goal)
+            if (heuristic == "misplaced")
+            score += misplaced(state, goal)
+            if (heuristic == "manhattan")
+            score += manhattan(state, goal)
+
+        }
+            return score
+
     }
 
     isGoal(goal) {
