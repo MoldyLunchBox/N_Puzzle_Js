@@ -13,18 +13,18 @@ const { log } = console
 
 async function main() {
 	const parameters = {
-		goalType: "zfirst",  // snail, zfirst
+		goalType: "snail",  // snail, zfirst
 		heuristics: [ // manhattan, euclidean, misplaced
 			"manhattan",
 		],
 		puzzleSource: "auto", // options: "auto" , "file"   
-		puzzleSize: 3   
+		puzzleSize: 5   
 	}
 	if (parameters.puzzleSource == "file")
 		var initState = await loadInput("./src/file.txt")
 	else {
 
-		var generator = new puzzleGen("zfirst", parameters.puzzleSize)
+		var generator = new puzzleGen(parameters.goalType, parameters.puzzleSize)
 		generator.start()
 		initState = generator.currentState
 	}

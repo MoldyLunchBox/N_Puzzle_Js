@@ -10,7 +10,6 @@ function getIndex(state, target) {
 }
 
 export function manhattan(state, goal){
-    console.log(goal)
     var x, y = 0
     var score = 0;
     var goalTarget = {}

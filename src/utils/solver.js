@@ -29,14 +29,19 @@ export class Solver {
             console.log("not solvable")
         }
         else {
-            
+            var loading = "loading"
             while (this.openList.length > 0) {
+                console.clear()
+                console.log(loading)
                 // sort the open states acording to score after each loop iteration this results in always following the closest possible path
+                if (this.visitedTimes % 200 == 0)
+                    loading += "."
+                if (this.visitedTimes % 800 == 0)
+                    loading = "loading"
                 this.openList.sort((a, b) => a.score - b.score)
                 
                 // save the first state with the lowest score and pop it from the open states list
                 this.currentState = this.openList.shift();
-                console.log(this.visitedTimes)
 
                 //printPuzzle(this.currentState.state, this.currentState.score, this.currentState.gscore)
 
