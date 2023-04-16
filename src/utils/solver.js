@@ -25,16 +25,18 @@ export class Solver {
 
     }
     start() {
-        if (!is_solvable(this.openList[0], this.openList[0].goal, this.openList[0].state.length)) {
+        if (!is_solvable(this.openList[0].state, this.openList[0].goal, this.openList[0].state.length)) {
             console.log("not solvable")
         }
         else {
+            
             while (this.openList.length > 0) {
                 // sort the open states acording to score after each loop iteration this results in always following the closest possible path
                 this.openList.sort((a, b) => a.score - b.score)
-
+                
                 // save the first state with the lowest score and pop it from the open states list
                 this.currentState = this.openList.shift();
+                console.log(this.visitedTimes)
 
                 //printPuzzle(this.currentState.state, this.currentState.score, this.currentState.gscore)
 

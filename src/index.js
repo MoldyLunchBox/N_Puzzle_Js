@@ -9,29 +9,38 @@ const { log } = console
 
 
 async function main() {
-	const initState = [ [ 2, 4, 3 ], 	
-						[ 1, 7, 5 ], 
-						[ 8, 0, 6 ] ]
+	// const initState = [ [ 2, 4, 3 ], 	
+	// 					[ 1, 7, 5 ], 
+	// 					[ 8, 0, 6 ] ]
+	const initState = await loadInput("./src/file.txt")
+	if (initState){
 
-	const parameters = {
-		goalType: "snail",  // snail, zfirst, zlast
-		heuristics: [ // manhattan, euclidean, misplaced
+		const parameters = {
+			goalType: "snail",  // snail, zfirst, zlast
+			heuristics: [ // manhattan, euclidean, misplaced
 			"manhattan",
 		]
 	}
-
+	
 	const goal = goalGenerator(parameters.goalType, initState.length)
+    console.log("out of goal")
+
+	log(initState)
+	log(goal)
 	// heuristics list: manhattan, misplaced.
 	const node = new Node(initState, null, 0, goal, parameters.heuristics)
 	
 	//prepare a solver instance
-	const solver = new Solver(node, parameters) 
+	const solver = new Solver(node, parameters)
 	// attempt to solvet he possible
-	solver.start()				
+	solver.start()
 	// if the puzzle was solved, trace back the steps to print it
 	if (solver.solved)
-		traceBack(solver.currentState, solver)
-		
+	traceBack(solver.currentState, solver)
+}
+else
+	console.log("bad file parsing")
+
 	// const bloomFilter = new BloomFilter(32 * 1024 * 40000, 32);
 }
 main()

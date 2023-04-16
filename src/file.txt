@@ -1,7 +1,6 @@
-heyhey
-hello
-
-
-	// var file = await loadInput("./src/file.txt")
-	// 					log(file.split("\n"))
-	// 					exit()
+# Puzzles can be aligned, or NOT. whatever. accept both.
+4
+13   1  2 3
+14 11 5 4
+12  9 15 6
+10  8  7 0

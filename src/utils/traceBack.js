@@ -8,6 +8,6 @@ import pause, { printPuzzle } from ".//utils";
 		i++
 		// await pause(1)
 	}
-	console.log("steps:", i)
+	console.log("steps:", i - 1)
 	console.log("visited:", solver.visitedTimes)
 }
