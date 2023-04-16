@@ -13,27 +13,24 @@ const { log } = console
 
 async function main() {
 	const parameters = {
-		goalType: "zfirst",  // snail, zfirst, zlast
+		goalType: "zfirst",  // snail, zfirst
 		heuristics: [ // manhattan, euclidean, misplaced
 			"manhattan",
 		],
-		puzzleSource: "auto", // options: "auto" , "file"      
+		puzzleSource: "auto", // options: "auto" , "file"   
+		puzzleSize: 3   
 	}
 	if (parameters.puzzleSource == "file")
 		var initState = await loadInput("./src/file.txt")
 	else {
 
-		var generator = new puzzleGen("zfirst", 3)
+		var generator = new puzzleGen("zfirst", parameters.puzzleSize)
 		generator.start()
 		initState = generator.currentState
 	}
 	if (initState) {
 
 		const goal = goalGenerator(parameters.goalType, initState.length)
-		console.log("out of goal")
-
-		log("puzzle:", initState)
-		log("goal:", goal)
 		// heuristics list: manhattan, misplaced.
 		const node = new Node(initState, null, 0, goal, parameters.heuristics)
 
