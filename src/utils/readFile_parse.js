@@ -39,8 +39,6 @@ function parsePuzzle(file) {
   // size must be correct
   if (size != puzzle.length)
     return null
-    console.log("then end")
-  console.log(puzzle)
   return puzzle
 }
 function loadInput(filePath) {

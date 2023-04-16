@@ -1,5 +1,5 @@
 
-function zFirst(size) {
+function zfirst(size) {
     var flatGoal = []
     var arr2D = []
     for (var i = 0; i < size * size; i++) {
@@ -56,7 +56,7 @@ function snail(size) {
 
 
 export function goalGenerator(type, size) {
-    const funcs = { snail: snail(size), zFirst: zFirst(size) }
+    const funcs = { snail: snail(size), zfirst: zfirst(size) }
 
     return funcs[type]
 

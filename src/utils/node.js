@@ -6,7 +6,7 @@ function duplicateArray(arr) {
         return row.slice();
     });
 }
-function createSubState(state, emptyIndex, direction) {
+export function createSubState(state, emptyIndex, direction) {
     const newState = duplicateArray(state)
     switch (direction) {
         case 'left':
@@ -27,7 +27,7 @@ function createSubState(state, emptyIndex, direction) {
             return newState
     }
 }
-function getIndex(state, target) {
+export function getIndex(state, target) {
     const size = state.length;
     for (let i = 0; i < size; i++) {
         for (let j = 0; j < size; j++) {
