@@ -35,15 +35,21 @@ export function getIndex(state, target) {
         }
     }
 }
+function gscore(){
+
+}
 export class Node {
-    constructor(state, parent, gscore, goal, heuristic) {
+    constructor(state, parent, goal, params) {
         this.state = state
-        this.gscore = gscore
+        this.gscore = 0
+        if (!params.greedy)
+            this.gscore = (parent == null) ? 0 : (parent.gscore + 1);
         this.parent = parent
         this.mapSize = state.length
         this.subStates = []
         this.goal = goal
-        this.score = this.score(this.state, this.goal, heuristic)
+        this.hscore = params.uniform ? 0 :  this.score(this.state, this.goal, params.heuristics)
+        this.score = this.hscore + this.gscore
         this.hash = this.state.map(e => e.join('.')).join('.')
     }
     getSubStates() {

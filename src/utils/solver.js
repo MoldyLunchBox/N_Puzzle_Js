@@ -26,25 +26,24 @@ export class Solver {
     }
     start() {
         if (!is_solvable(this.openList[0].state, this.openList[0].goal, this.openList[0].state.length)) {
-            console.log("not solvable")
+            console.log("not solvable", this.openList[0].goal, this.openList[0].state.length)
         }
         else {
             var loading = "loading"
             while (this.openList.length > 0) {
-                console.clear()
-                console.log(loading)
                 // sort the open states acording to score after each loop iteration this results in always following the closest possible path
-                if (this.visitedTimes % 200 == 0)
-                    loading += "."
-                if (this.visitedTimes % 800 == 0)
-                    loading = "loading"
+                // if (this.visitedTimes % 200 == 0)
+                //     loading += "."
+                // if (this.visitedTimes % 800 == 0)
+                //     loading = "loading"
                 this.openList.sort((a, b) => a.score - b.score)
                 
                 // save the first state with the lowest score and pop it from the open states list
                 this.currentState = this.openList.shift();
-
-                //printPuzzle(this.currentState.state, this.currentState.score, this.currentState.gscore)
-
+                
+                console.clear()
+                printPuzzle(this.currentState.state, this.currentState.score, this.currentState.gscore)
+                console.log(this.visitedTimes)
                 // check if the current state equals the goal state
                 if (this.currentState.isGoal(this.currentState.goal)) {
                     log("found it");
@@ -60,7 +59,7 @@ export class Solver {
                         continue;
                     }
                     if (!verifyExistance(this.openList, subState)) {
-                        this.openList.push(new Node(subState, this.currentState, this.currentState.gscore + 1, this.currentState.goal, this.params.heuristics));
+                        this.openList.push(new Node(subState, this.currentState,  this.currentState.goal, this.params));
                     }
                 }
                 // since the current state is not the goal we add it to the visited list

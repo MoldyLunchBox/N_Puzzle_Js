@@ -13,13 +13,13 @@ import pause, { printPuzzle } from ".//utils";
 		console.clear()
 		console.log("--- Solution ---")
 		printPuzzle(solution[i].state, solution[i].score)
-		console.log("step:", solution.length-i, "/", solution.length - 1)
+		console.log("step:", solution.length-i -1, "/", solution.length - 1)
 
 		 await pause(1)
 	}
 	console.log("--- Puzzle ---")
 	printPuzzle(solution[solution.length - 1].state)
 
-	console.log("stejps:", steps - 1)
+	console.log("steps:", steps - 1)
 	console.log("visited:", solver.visitedTimes)
 }
