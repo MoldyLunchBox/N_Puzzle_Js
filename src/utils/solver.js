@@ -21,7 +21,7 @@ export class Solver {
         this.openList = [firstState]
         this.visitedTimes = 0
         this.solved = false
-
+        this.time = 0
 
     }
     start() {
@@ -29,21 +29,24 @@ export class Solver {
             console.log("not solvable", this.openList[0].goal, this.openList[0].state.length)
         }
         else {
+            const start = process.hrtime();
+
             var loading = "loading"
             while (this.openList.length > 0) {
+                console.clear()
+                if (this.visitedTimes % 200 == 0)
+                    loading += "."
+                if (this.visitedTimes % 800 == 0)
+                    loading = "loading"
+            console.log(loading)
                 // sort the open states acording to score after each loop iteration this results in always following the closest possible path
-                // if (this.visitedTimes % 200 == 0)
-                //     loading += "."
-                // if (this.visitedTimes % 800 == 0)
-                //     loading = "loading"
                 this.openList.sort((a, b) => a.score - b.score)
-                
+
                 // save the first state with the lowest score and pop it from the open states list
                 this.currentState = this.openList.shift();
-                
-                console.clear()
-                printPuzzle(this.currentState.state, this.currentState.score, this.currentState.gscore)
-                console.log(this.visitedTimes)
+
+                // printPuzzle(this.currentState.state, this.currentState.score, this.currentState.gscore)
+                // console.log(this.visitedTimes)
                 // check if the current state equals the goal state
                 if (this.currentState.isGoal(this.currentState.goal)) {
                     log("found it");
@@ -59,13 +62,15 @@ export class Solver {
                         continue;
                     }
                     if (!verifyExistance(this.openList, subState)) {
-                        this.openList.push(new Node(subState, this.currentState,  this.currentState.goal, this.params));
+                        this.openList.push(new Node(subState, this.currentState, this.currentState.goal, this.params));
                     }
                 }
                 // since the current state is not the goal we add it to the visited list
                 this.visited.add(this.currentState.state.toString());
                 this.visitedTimes += 1
             }
+		    this.time = process.hrtime(start);
+
         }
     }
 }

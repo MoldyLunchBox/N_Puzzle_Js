@@ -15,11 +15,13 @@ import pause, { printPuzzle } from ".//utils";
 		printPuzzle(solution[i].state, solution[i].score)
 		console.log("step:", solution.length-i -1, "/", solution.length - 1)
 
-		 await pause(1)
+		//  await pause(1)
 	}
 	console.log("--- Puzzle ---")
 	printPuzzle(solution[solution.length - 1].state)
 
 	console.log("steps:", steps - 1)
 	console.log("visited:", solver.visitedTimes)
+	console.log("time spent:", solver.time)
+
 }

@@ -17,8 +17,8 @@ async function main() {
 		heuristics: [ // manhattan, euclidean, misplaced
 			"manhattan",
 		],
-		puzzleSource: "file", // options: "auto" , "file"   
-		puzzleSize: 3,
+		puzzleSource: "auto", // options: "auto" , "file"   
+		puzzleSize: 4,
 		greedy: true,
 		uniform: false   
 
