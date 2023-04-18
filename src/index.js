@@ -13,15 +13,20 @@ const { log } = console
 
 async function main() {
 	const parameters = {
-		goalType: "zfirst",  // snail, zfirst
+		goalType: "snail",  // snail, zfirst
 		heuristics: [ // manhattan, euclidean, misplaced
-			"euclidean",
+			"manhattan",
 		],
 		puzzleSource: "file", // options: "auto" , "file"   
 		puzzleSize: 4,
 		greedy: true,
 		uniform: false,
-		dataStructure: "pQueue"  //options: "pQueue" , "array"
+		dataStructure: "pQueues",  //options: "pQueue" , "array"
+		verifyStateExistence: true, // options: "true" , "false"
+		solution :{
+			animation: true,
+			showPuzzle: true,
+		}
 	}
 	if (parameters.puzzleSource == "file")
 		var initState = await loadInput("./src/file.txt")
@@ -44,7 +49,7 @@ async function main() {
 		solver.start()
 		// if the puzzle was solved, trace back the steps to print it
 		if (solver.solved)
-			traceBack(solver.currentState, solver)
+			traceBack(solver.currentState, solver, parameters)
 	}
 	else
 		console.log("bad file parsing")

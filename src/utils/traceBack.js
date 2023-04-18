@@ -1,6 +1,6 @@
 import pause, { printPuzzle } from ".//utils";
  
- export  async function  traceBack(path, solver){
+ export  async function  traceBack(path, solver, params){
     var steps = 0
 	var solution = []
 	// reverse the the order
@@ -10,17 +10,18 @@ import pause, { printPuzzle } from ".//utils";
 		steps++
 	}
 	for (var i = solution.length - 1; i >= 0; i--) {
-		
-		console.clear()
-		console.log("--- Solution ---")
+		if (params.solution.animation){
+			console.clear()
+			console.log("--- Solution ---")
+		}
 		printPuzzle(solution[i].state, solution[i].score)
-		console.log("step:", solution.length-i -1, "/", solution.length - 1)
+		console.log("step:", solution.length-i -1, "/", solution.length - 1,"\n\n")
+		if (params.solution.animation)
+		await pause(1)
 
-		//  await pause(1)
 	}
 	console.log("--- Puzzle ---")
 	printPuzzle(solution[solution.length - 1].state)
-
 	console.log("steps:", steps - 1)
 	console.log("time complexity:", solver.visitedTimes)
 	console.log("size complexity:", solver.cSize)

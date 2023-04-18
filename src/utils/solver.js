@@ -72,20 +72,24 @@ export class Solver {
             const start = process.hrtime();
 
             var load = "loading"
+            console.clear()
+            console.log("here we go ----------------------------------------------------------------------------------------------------------------------------------------------")
             while (1) {
                 if (this.params.dataStructure == "pQueue") {
+              
 
                     const queueSize = this.openList.length
                     this.cSize = queueSize < this.cSize ? this.cSize : queueSize
                     this.currentState = this.openList.dequeue();
                 }
                 else {
-
                     // sort the open states acording to score after each loop iteration this results in always following the closest possible path
                     this.openList.sort((a, b) => a.score - b.score)
-
+                 
+                    const listSize =  this.openList.length
                     // save the first state with the lowest score and pop it from the open states list
                     this.currentState = this.openList.shift();
+                    this.cSize = listSize < this.cSize ? this.cSize : listSize
 
                 }
 
@@ -107,12 +111,12 @@ export class Solver {
                         continue;
                     }
                     if (this.params.dataStructure == "pQueue") {
-                        if (!verifyExistance(this.openList.priv.data, subState))
+                        if ((this.params.verifyStateExistence && !verifyExistance(this.openList.priv.data, subState)) || !this.params.verifyStateExistence)
                         this.openList.queue(new Node(subState, this.currentState, this.currentState.goal, this.params));
                     }
-                    else if (!verifyExistance(this.openList, subState))
+                    else if ((!verifyExistance(this.openList, subState)))
                         this.openList.push(new Node(subState, this.currentState, this.currentState.goal, this.params));
-
+                   
                 }
                 // since the current state is not the goal we add it to the visited list
                 this.visited.add(this.currentState.state.toString());

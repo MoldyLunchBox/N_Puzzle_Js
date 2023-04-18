@@ -10,6 +10,20 @@ function zfirst(size) {
     }
     return arr2D
 }
+
+function zlast(size) {
+    var flatGoal = []
+    var arr2D = []
+    for (var i = 1; i < size * size; i++) {
+        flatGoal.push(i)
+    }
+    flatGoal.push(0)
+    for (var i = 0; i < size; i++) {
+        arr2D.push(flatGoal.slice(i * size, (i + 1) * size))
+    }
+    return arr2D
+}
+
 function create2DArray(size) {
     const arr = new Array(size);
     for (let i = 0; i < size; i++) {
@@ -56,7 +70,7 @@ function snail(size) {
 
 
 export function goalGenerator(type, size) {
-    const funcs = { snail: snail(size), zfirst: zfirst(size) }
+    const funcs = { snail: snail(size), zfirst: zfirst(size), zlast: zlast(size) }
 
     return funcs[type]
 
