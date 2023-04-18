@@ -60,10 +60,10 @@ export class Solver {
         //   }
 
         //   const test = new PriorityQueue();
-        //   test.queue(new Test("hello", 1));
+        //   test.queue(new Test(test, 1));
         //   test.queue(new Test("yo", 2));
 
-        //   console.log(test.toArray())
+        //   console.log(test.priv.data[1])
         // exit()
         if (!is_solvable(this.currentState.state, this.currentState.goal, this.currentState.state.length)) {
             console.log("not solvable", this.openList[0].goal, this.openList[0].state.length)
@@ -107,6 +107,7 @@ export class Solver {
                         continue;
                     }
                     if (this.params.dataStructure == "pQueue") {
+                        if (!verifyExistance(this.openList.priv.data, subState))
                         this.openList.queue(new Node(subState, this.currentState, this.currentState.goal, this.params));
                     }
                     else if (!verifyExistance(this.openList, subState))
