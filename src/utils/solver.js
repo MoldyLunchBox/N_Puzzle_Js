@@ -1,6 +1,8 @@
 import pause, { getNeighbors, printPuzzle } from "./utils";
 import { Node } from "./node"
 import { is_solvable } from "./solvabilityChecker";
+const PriorityQueue = require('js-priority-queue');
+// import PriorityQueue from "./priorityQueue";
 
 const { log } = console
 
@@ -13,40 +15,83 @@ function verifyExistance(node, lookFor) {
     return false
 }
 
+function checkExistance(queue, lookFor) {
+    for (element of queue) {
+        console.log(element)
+    }
+    return false
+}
+function loading(iteration, load) {
+    console.clear()
+    if (iteration % 200 == 0)
+        load += "."
+    if (iteration % 800 == 0)
+        load = "loading"
+    console.log(load)
+    return load
+}
 export class Solver {
     constructor(firstState, params) {
         this.params = params
-        this.currentState = null
         this.visited = new Set();
-        this.openList = [firstState]
+        if (this.params.dataStructure == "pQueue") {
+
+            this.openList = new PriorityQueue({
+                comparator: (a, b) => a.score - b.score
+            });
+            this.openList.queue(firstState);
+        }
+        else
+            this.openList = [firstState]
+        this.currentState = firstState
         this.visitedTimes = 0
         this.solved = false
         this.time = 0
+        this.cSize = 0
 
     }
     start() {
-        if (!is_solvable(this.openList[0].state, this.openList[0].goal, this.openList[0].state.length)) {
+
+        // class Test {
+        //     constructor(str, priority) {
+        //       this.str = str;
+        //       this.priority = priority;
+        //     }
+        //   }
+
+        //   const test = new PriorityQueue();
+        //   test.queue(new Test("hello", 1));
+        //   test.queue(new Test("yo", 2));
+
+        //   console.log(test.toArray())
+        // exit()
+        if (!is_solvable(this.currentState.state, this.currentState.goal, this.currentState.state.length)) {
             console.log("not solvable", this.openList[0].goal, this.openList[0].state.length)
         }
         else {
             const start = process.hrtime();
 
-            var loading = "loading"
-            while (this.openList.length > 0) {
-                console.clear()
-                if (this.visitedTimes % 200 == 0)
-                    loading += "."
-                if (this.visitedTimes % 800 == 0)
-                    loading = "loading"
-            console.log(loading)
-                // sort the open states acording to score after each loop iteration this results in always following the closest possible path
-                this.openList.sort((a, b) => a.score - b.score)
+            var load = "loading"
+            while (1) {
+                if (this.params.dataStructure == "pQueue") {
 
-                // save the first state with the lowest score and pop it from the open states list
-                this.currentState = this.openList.shift();
+                    const queueSize = this.openList.length
+                    this.cSize = queueSize < this.cSize ? this.cSize : queueSize
+                    this.currentState = this.openList.dequeue();
+                }
+                else {
 
-                // printPuzzle(this.currentState.state, this.currentState.score, this.currentState.gscore)
-                // console.log(this.visitedTimes)
+                    // sort the open states acording to score after each loop iteration this results in always following the closest possible path
+                    this.openList.sort((a, b) => a.score - b.score)
+
+                    // save the first state with the lowest score and pop it from the open states list
+                    this.currentState = this.openList.shift();
+
+                }
+
+                // just a loading message
+                load = loading(this.visitedTimes, load)
+
                 // check if the current state equals the goal state
                 if (this.currentState.isGoal(this.currentState.goal)) {
                     log("found it");
@@ -55,21 +100,24 @@ export class Solver {
                 }
                 const subStates = this.currentState.getSubStates();		//generate substates
 
-                //add each substate to open states list if it doesnt exist in the visited list and doesnt already exist in the open states
+                // add each substate to open states list if it doesnt exist in the visited list and doesnt already exist in the open states
                 for (const subState of subStates) {
 
                     if (this.visited.has(subState.toString())) {
                         continue;
                     }
-                    if (!verifyExistance(this.openList, subState)) {
-                        this.openList.push(new Node(subState, this.currentState, this.currentState.goal, this.params));
+                    if (this.params.dataStructure == "pQueue") {
+                        this.openList.queue(new Node(subState, this.currentState, this.currentState.goal, this.params));
                     }
+                    else if (!verifyExistance(this.openList, subState))
+                        this.openList.push(new Node(subState, this.currentState, this.currentState.goal, this.params));
+
                 }
                 // since the current state is not the goal we add it to the visited list
                 this.visited.add(this.currentState.state.toString());
                 this.visitedTimes += 1
             }
-		    this.time = process.hrtime(start);
+            this.time = process.hrtime(start);
 
         }
     }

@@ -4,3 +4,43 @@
 14 11 5 4
 12  9 15 6
 10  8  7 0
+
+
+
+--- Solution ---
+================
+ █  1  2  3 
+ 4  5  6  7 
+ 8  9  10  11 
+ 12  13  14  15   score: 0
+================
+step: 146 / 146
+--- Puzzle ---
+================
+ █  6  14  7 
+ 2  10  5  13 
+ 15  8  3  12 
+ 11  4  1  9 
+================
+steps: 146
+time complexity: 4640
+duration: [ 75, 562198666 ]
+
+================
+
+steps: 298
+time complexity: 2185
+size complexity: 2286
+duration: [ 0, 144336626 ]
+
+
+steps: 276
+time complexity: 3770
+size complexity: 0
+duration: [ 44, 543853259 ]
+
+
+steps: 276
+time complexity: 3770
+size complexity: 0
+duration: [ 47, 35396282 ]

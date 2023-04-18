@@ -15,13 +15,13 @@ async function main() {
 	const parameters = {
 		goalType: "zfirst",  // snail, zfirst
 		heuristics: [ // manhattan, euclidean, misplaced
-			"manhattan",
+			"euclidean",
 		],
-		puzzleSource: "auto", // options: "auto" , "file"   
+		puzzleSource: "file", // options: "auto" , "file"   
 		puzzleSize: 4,
 		greedy: true,
-		uniform: false   
-
+		uniform: false,
+		dataStructure: "pQueue"  //options: "pQueue" , "array"
 	}
 	if (parameters.puzzleSource == "file")
 		var initState = await loadInput("./src/file.txt")

@@ -1,5 +1,6 @@
 # Puzzles can be aligned, or NOT. whatever. accept both.
-3
-3 1 2
-5 8 0
-4 6 7
+4
+0 6 14 7
+2 10 5 13
+15 8 3 12
+11 4 1 9
