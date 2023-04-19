@@ -38,6 +38,21 @@ size complexity: 101
 duration: [ 2, 683449689 ]
 
 
+
+--- Puzzle ---
+================
+ 1  █  2 
+ 8  5  4 
+ 7  6  3 
+================
+steps: 13
+time complexity: 81
+size complexity: 58
+duration: [ 0, 3229559 ]
+
+
+
+
    for (var q = 0; q < this.openList.length; q++){
                         printPuzzle(this.openList[q].state, this.openList[q].score)
                     }

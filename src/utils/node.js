@@ -74,7 +74,7 @@ export class Node {
             if (heuristic == "misplaced")
             score += misplaced(state, goal)
             if (heuristic == "manhattan")
-            score += manhattan(state, goal)
+            score += manhattan(state, goal) 
 
         }
             return score

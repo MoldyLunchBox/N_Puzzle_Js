@@ -6,8 +6,4 @@ NODE = npm run dev
 
 # Build target
 all:
-    $(NODE)
-
-# Clean target
-clean:
-    rm $(OUT)
+	$(NODE)

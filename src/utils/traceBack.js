@@ -17,7 +17,7 @@ import pause, { printPuzzle } from ".//utils";
 		printPuzzle(solution[i].state, solution[i].score)
 		console.log("step:", solution.length-i -1, "/", solution.length - 1,"\n\n")
 		if (params.solution.animation)
-		await pause(1)
+		await pause(params.solution.animationSpeed)
 
 	}
 	console.log("--- Puzzle ---")

@@ -13,23 +13,24 @@ const { log } = console
 
 async function main() {
 	const parameters = {
-		goalType: "snail",  // snail, zfirst
+		goalType: "snail",  // snail, zfirst , zlast
 		heuristics: [ // manhattan, euclidean, misplaced
-			"manhattan",
+			"euclidean",
 		],
 		puzzleSource: "file", // options: "auto" , "file"   
-		puzzleSize: 4,
-		greedy: true,
+		puzzleSize: 3, // for automated puzzleSource
+		greedy: false,
 		uniform: false,
-		dataStructure: "pQueues",  //options: "pQueue" , "array"
+		dataStructure: "pQueue",  //options: "pQueue" , "array"
 		verifyStateExistence: true, // options: "true" , "false"
 		solution :{
-			animation: true,
+			animation: false,
 			showPuzzle: true,
+			animationSpeed: 0.1
 		}
 	}
 	if (parameters.puzzleSource == "file")
-		var initState = await loadInput("./src/file.txt")
+		var initState = await loadInput("./src/puzzles/5snail")
 		else {
 			
 			var generator = new puzzleGen(parameters.goalType, parameters.puzzleSize)
@@ -54,7 +55,6 @@ async function main() {
 	else
 		console.log("bad file parsing")
 
-	// const bloomFilter = new BloomFilter(32 * 1024 * 40000, 32);
 }
 main()
 
