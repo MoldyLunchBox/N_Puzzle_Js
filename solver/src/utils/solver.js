@@ -53,7 +53,7 @@ export class Solver {
             console.log("not solvable")
         }
         else {
-            const start = process.hrtime();
+            // const start = process.hrtime();
 
             var load = "loading"
             console.clear()
@@ -100,7 +100,8 @@ export class Solver {
                 }
                 this.visitedTimes += 1
             }
-            this.time = process.hrtime(start);
+            // this.time = process.hrtime(start);
+            this.time = 0
             if (this.params.dataStructure == "pQueue")
                 this.cSize = this.openList.maxOpen
 

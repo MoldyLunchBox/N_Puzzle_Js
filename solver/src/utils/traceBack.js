@@ -27,5 +27,5 @@ import pause, { printPuzzle } from ".//utils";
 	console.log("size complexity:", solver.cSize)
 	console.log("duration:", solver.time[0], "sec,", solver.time[1], "milisec" )
 
-
+	return {solution, solver}
 }
