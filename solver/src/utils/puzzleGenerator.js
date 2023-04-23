@@ -5,14 +5,7 @@ import { goalGenerator } from "./goalGenerator";
 
 const { log } = console
 
-function verifyExistance(node, lookFor) {
-    for (var i = 0; i < node.length; i++) {
-        if (node[i].state.toString() === lookFor.toString()) {
-            return (true)
-        }
-    }
-    return false
-}
+
 function getRandomInt(start, end) {
     // Add 1 to the range to include the end value
     const range = end - start + 1;

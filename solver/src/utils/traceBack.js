@@ -9,7 +9,8 @@ import pause, { printPuzzle } from ".//utils";
 		path = path.parent
 		steps++
 	}
-	for (var i = solution.length - 1; i >= 0; i--) {
+	solution.reverse()
+	for (var i = 0 ; i < solution.length; i++) {
 		if (params.solution.animation){
 			console.clear()
 			console.log("--- Solution ---")
