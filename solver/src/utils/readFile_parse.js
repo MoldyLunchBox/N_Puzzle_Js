@@ -36,7 +36,7 @@ function stringToNumbers(string) {
   return arr
 }
 
-function parsePuzzle(file) {
+export function parsePuzzle(file) {
   var puzzle = []
   if (file.length < 6)
     return null
