@@ -47,7 +47,7 @@ export const Panel = ({ startSolving, params, status, setStatus, setParams, setP
     }
 
     return (
-        <div className="relative h-[400px] rounded-t bg-[#2C7CB2] w-full border-b-8 md:h-auto border-black">
+        <div className="relative h-[400px] max-w-[630px]  rounded-t bg-[#2C7CB2] w-full border-b-8 md:h-auto border-black">
             <h1 className="absolute text-xl font-semibold p-2 lg:p-10 lg:text-3xl">Puzzle configuration</h1>
             <div className="flex h-full space-x-5 p-2 justify-around items-center content-center text-center">
                 <div className="space-y-4 " >
