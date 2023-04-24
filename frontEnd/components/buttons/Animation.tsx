@@ -18,7 +18,7 @@ interface Props {
     setParams: React.Dispatch<React.SetStateAction<Params>>
 }
 export const Animation = ({ setParams, params }: Props) => {
-    const [animationSpeed, SetAnimationSpeed] = useState(1)
+    const [animationSpeed, SetAnimationSpeed] = useState(0.1)
     useEffect(() => {
         setParams(prevParams => {
             return {
