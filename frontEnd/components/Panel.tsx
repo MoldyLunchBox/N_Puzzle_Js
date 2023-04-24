@@ -56,7 +56,7 @@ export const Panel = ({ startSolving, params, status, setStatus, setParams, setP
                         <Edit running={running} params={params} setStatus={setStatus}  setPuzzle={setPuzzle}  />
                         <button onClick={startSolving} className="my-5 py-2 w-full  bg-[#99A4DA] font-semibold rounded-t shadow-lg border-b-4 border-black hover:bg-[#8c98d7]">Start</button>
                     </div>
-                    <div className="w-[210px]  bg-white h-[107px] rounded-md " >
+                    <div className="w-[220px]  bg-white h-[107px] rounded-md " >
                         <h1 className="text-[red] "> status !</h1>
                         <h2  style={{ whiteSpace: 'pre-line' }} className="text-[#4734bf] px-2 text-start font-thin"> {status}</h2>
                     </div>
