@@ -29,8 +29,8 @@ export default function Edit({ params, setStatus, setPuzzle, running }: Props) {
 
 console.log(params.puzzleSize, arr )
 if (!running && arr.length > 2 && arr.length / params.puzzleSize == params.puzzleSize ) {
-  for (let i = 0; i < params.puzzleSize * params.puzzleSize; i+= parseInt(params.puzzleSize)) {
-    newPuzzle.push(arr.slice(i, i  + parseInt(params.puzzleSize)).map(Number))
+  for (let i = 0; i < params.puzzleSize * params.puzzleSize; i+= params.puzzleSize) {
+    newPuzzle.push(arr.slice(i, i  + params.puzzleSize).map(Number))
   }
       console.log(verifyPuzzle(newPuzzle))
       if (verifyPuzzle(newPuzzle)) {
